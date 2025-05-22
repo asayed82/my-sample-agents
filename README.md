@@ -205,10 +205,11 @@ If needed, you can get it by running the below command:
 
    Specifically, in Line 70, if you use GeminiAPI without any specified endpoint it will use the *'ws://localhost:8081'*, otherwise it will use the specified endpoint. For example: 
 
-    ```bash
-   const api = new GeminiAPI(); // us of 'ws://localhost:8081'
-    // const api = new GeminiAPI('wss://live-agent-backend-xxxx-uc.a.run.app'); // remote BACKEND_URL example
+   ```javascript
+       const api = new GeminiAPI(); // this will use the default endpoint:'ws://localhost:8081'
+       // const api = new GeminiAPI('wss://live-agent-backend-xxxx-uc.a.run.app'); // remote BACKEND_URL example
    ```
+
 4. **Run the Bash script to deploy agent frontend**
 
     Deploy the front end to Cloud Run
@@ -236,3 +237,4 @@ If needed, you can get it by running the below command:
 ### License
 
 This project is licensed under the MIT License.
+
