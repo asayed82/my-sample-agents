@@ -4,7 +4,7 @@
 
 This repo empowers developers to build robust, live Agents using [Google ADK](https://google.github.io/adk-docs/) that facilitate real-time multimodal interactions with end-users through audio, video, and text. 
 
-It is a quick adaptation of  [Project Livewire](https://github.com/heiko-hotz/project-livewire/tree/main) created by Heiko Hotz, a modern multimodal chat solution that leverages Google's Gemini 2.0 and its Live Streaming API to enable real-time voice, text, and visual interactions.
+It is an adaptation of  [Project Livewire](https://github.com/heiko-hotz/project-livewire/tree/main) created by Heiko Hotz, a modern multimodal chat solution that leverages Google's Gemini 2.0 and its Live Streaming API to enable real-time voice, text, and visual interactions.
 
 The adaptation is tested for 3 sample use cases:
 
