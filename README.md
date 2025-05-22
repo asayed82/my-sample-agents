@@ -90,11 +90,11 @@ Follow these steps to run the application locally:
 
 3. **Create a Cloud SQL instance**
 
-Create a Cloud SQL instance named `live-agents-db-instance` by following [this doc](https://cloud.google.com/sql/docs/mysql/create-instance). 
+Create a Cloud SQL PostgreSQL instance named `live-agents-db-instance` by following [this doc](https://cloud.google.com/sql/docs/postgres/create-instance). 
 
 4. **Create the interview table in Cloud SQL instance**
 
-Create a table called `interview` with the below schema using the Cloud SQL Studio. Refer [to this doc](https://cloud.google.com/sql/docs/mysql/manage-data-using-studio)
+Create a table called `interview` with the below schema using the Cloud SQL Studio. Refer [to this doc](https://cloud.google.com/sql/docs/postgres/manage-data-using-studio)
 
 ```sql
 CREATE TABLE "public".interview (
@@ -106,9 +106,86 @@ CREATE TABLE "public".interview (
  evaluation JSONB
 );
 ```
-Populate the table with random data. You can give this schema to Gemini and ask it generate `INSERT` statements. 
+Populate the table with random data. You can give this schema to Gemini and ask it generate `INSERT` statements.
 
-4. **Start the MCP Toolbox for Database server**
+Below is a sample SQL Insert statement:
+
+```sql
+INSERT INTO interview (interview_code, interview_date, candidate_cv, job_description)
+VALUES(
+  'ABC',
+  CURRENT_DATE,
+  '{
+        "name": "Sami Sam",
+        "email": "sami@example.com",
+        "skills": [
+            "Cloud Computing (AWS, Azure, GCP)",
+            "Data Engineering (Spark, Hadoop, Kafka)",
+            "Machine Learning (TensorFlow, PyTorch, Scikit-learn)",
+            "AI Architecture",
+
+        ],
+        "experience": [
+            {
+                "title": "Senior Data and AI Architect",
+                "company": "Tech Solutions Inc.",
+                "years": "2018-Present",
+                "description": "Designed and implemented scalable data and AI solutions for enterprise clients. Led a team of engineers in developing machine learning models and data pipelines. Provided technical leadership and guidance to clients on cloud adoption and data strategy."
+            },
+            {
+                "title": "Data Engineer",
+                "company": "Data Insights Corp.",
+                "years": "2016-2018",
+                "description": "Developed and maintained data pipelines for ingesting, processing, and storing large datasets. Implemented data quality checks and monitoring systems. Collaborated with data scientists to build machine learning models."
+            }
+        ],
+        "education": [
+            {
+                "degree": "Master of Science in Data Science",
+                "university": "University of California, Berkeley",
+                "year": "2016"
+            },
+            {
+                "degree": "Bachelor of Science in Computer Science",
+                "university": "Cairo University",
+                "year": "2014"
+            }
+        ],
+        "languages": [
+            "English (Native)",
+            "Arabic (Native)",
+            "French (Conversational)"
+        ],
+        "certifications": [
+            "AWS Certified Solutions Architect - Professional",
+            "Google Cloud Certified Professional Cloud Architect",
+            "Microsoft Certified: Azure Solutions Architect Expert"
+        ],
+        "projects": [
+            {
+                "name": "Customer Churn Prediction",
+                "description": "Developed a machine learning model to predict customer churn, resulting in a 15% reduction in churn rate."
+            },
+            {
+                "name": "Sales Forecasting",
+                "description": "Built a time series model to forecast sales for different product categories, improving forecast accuracy by 10%."
+            }
+        ]
+    }',
+
+     '{
+        "location": "Riyadh, Saudi Arabia",
+        "job_title": "Senior Data and AI Architect, Cloud Consulting (English, Arabic)",
+        "level": "Advanced",
+        "minimum_qualifications": "Bachelor''s degree or equivalent practical experience. 7 years of experience in delivery and developing customer-facing services Data and AI programs, leading engineers and aligning with business stakeholders and executive leadership. Ability to communicate in English and French fluently to support client relationship management in this region. Ability to travel 20% of the time as required.",
+        "prefered_qualifications": "Experience implementing large-scale cloud or software projects in corporate environments. Knowledge in cloud architecture with experience across a range of enterprise use cases. Understanding of modern application migration and modernization approaches. Excellent organizational, problem-solving and influencing skills",
+        "about_the_job": "As a Data and AI Architect, you will work with Google’s customers on critical projects to help them transform their businesses. You will provide management, consulting, and technical aptitude to customer engagements while working with client executives and key technical leaders to deploy solutions via Google’s Cloud Platform. You will provide directional data strategy across people, process and technology. You will also work with key Google partners currently servicing top accounts to manage programs, deliver consulting services, and provide technical guidance and best practice expertise. Travel will be around 30% of client engagements. Google Cloud accelerates every organization’s ability to digitally transform its business and industry. We deliver enterprise-grade solutions that leverage Google’s cutting-edge technology, and tools that help developers build more sustainably. Customers in more than 200 countries and territories turn to Google Cloud as their trusted partner to enable growth and solve their most critical business problems.",
+        "responsabilities": "Work with customer technical leads, client executives, and partners to architect, manage and deliver implementations of data and AI cloud solutions, becoming a trusted advisor to decision-makers throughout the engagement. Work with internal specialists, product, and engineering teams to consolidate best practices and lessons learned into thought leadership, methodologies, and solution. Interact with sales, partners, and customer technical stakeholders to manage project scope, priorities, deliverables, risks/issues, and timelines for successful client outcomes. Propose solution architectures and manage the deployment of cloud based Data and AI solutions according to customer requirements and implementation best practices, support consultancy pre sales teams via architectural discussions and design workshops."
+    }'
+);
+```
+
+5. **Start the MCP Toolbox for Database server**
 
 The MCP Toolbox version installed by default from this repo is for Linux amd64. You can find it in `server/mcp_toolbox`.
 
@@ -121,7 +198,7 @@ Update the ```mcp_toolbox/tools.yaml``` with the cloud sql instance name and tab
    python mcp_toolbox/server.py
    ```
 
-5. **Start the Frontend Client:**
+6. **Start the Frontend Client:**
 
    
    Open a new terminal window and navigate to the client directory:
@@ -134,14 +211,14 @@ Update the ```mcp_toolbox/tools.yaml``` with the cloud sql instance name and tab
    python -m http.server 8000
    ```
 
-5. **Access the Application:**
+7. **Access the Application:**
 
    Open your web browser and navigate to:
 
    - Development UI: `http://localhost:8000/index.html`
 
 
-6. **Test the Connection:**
+8. **Test the Connection:**
 
    1. Open your browser's developer tools (F12).
    2. Check the console for any connection errors.
@@ -173,22 +250,7 @@ export DEMO_TYPE='hr'
 
 3. **Create the interview table in Cloud SQL instance**
 
-Create a table called `interview` with the below schema using the Cloud SQL Studio. Refer [to this doc](https://cloud.google.com/sql/docs/mysql/manage-data-using-studio)
-
-A Cloud SQL instance has been created from the previous step under `live-agents-db-instance` name by default.
-
-
-```sql
-CREATE TABLE "public".interview (
- interview_id SERIAL PRIMARY KEY,
- interview_code VARCHAR NOT NULL,
- interview_date DATE,
- candidate_cv JSONB,
- job_description JSONB,
- evaluation JSONB
-);
-```
-Populate the table with random data. You can give this schema to Gemini and ask it generate `INSERT` statements. 
+Refer to step #4 in the local deployment option. The same applies here. 
 
 3. **Update the backend url  in the client html file**
 
