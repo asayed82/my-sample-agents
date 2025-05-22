@@ -1,8 +1,8 @@
-# Project Pastra 2.0 Agent Development Kit Edition
+# Sample ADK Agents with Live Streaming
 
 ## Overview
 
-This repo empowers developers to build robust, live Agents using (Google ADK)[https://google.github.io/adk-docs/] that facilitate real-time multimodal interactions with end-users through audio, video, and text. 
+This repo empowers developers to build robust, live Agents using [Google ADK](https://google.github.io/adk-docs/) that facilitate real-time multimodal interactions with end-users through audio, video, and text. 
 
 It is a quick adaptation of  [Project Livewire](https://github.com/heiko-hotz/project-livewire/tree/main) created by Heiko Hotz, a modern multimodal chat solution that leverages Google's Gemini 2.0 and its Live Streaming API to enable real-time voice, text, and visual interactions.
 
@@ -201,12 +201,11 @@ If needed, you can get it by running the below command:
    echo $BACKEND_URL
    ```
 
-   Then you update the URL into the following file 
-    - `client/src/index.html`
+   Then you update the URL into the following file  `client/src/index.html`
 
    Specifically, in Line 70, if you use GeminiAPI without any specified endpoint it will use the *'ws://localhost:8081'*, otherwise it will use the specified endpoint. For example: 
 
-    ```javascript
+    ```bash
    const api = new GeminiAPI(); // us of 'ws://localhost:8081'
     // const api = new GeminiAPI('wss://live-agent-backend-xxxx-uc.a.run.app'); // remote BACKEND_URL example
    ```
@@ -237,10 +236,3 @@ If needed, you can get it by running the below command:
 ### License
 
 This project is licensed under the MIT License.
-
-### Contributing
-
-This is a personal project, but suggestions and feedback are welcome! Feel free to open issues or submit pull requests. If you want to contribute please contact:
-
-- Sokratis Kartakis
-- Heiko Hotz
